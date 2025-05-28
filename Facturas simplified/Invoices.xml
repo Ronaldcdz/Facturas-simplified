@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Facturas simplified</name>
+    </assembly>
+    <members>
+        <member name="T:Facturas_simplified.Migrations.Init">
+            <inheritdoc />
+        </member>
+        <member name="M:Facturas_simplified.Migrations.Init.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Facturas_simplified.Migrations.Init.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Facturas_simplified.Migrations.Init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
