@@ -27,8 +27,8 @@ public class UpdateClientRequestValidator : AbstractValidator<UpdateClientReques
     _dbContext = dbContext;
 
     RuleFor(x => x.Direction).MustAsync(AddressNotBeEmptyIfItIsSetOnClientAlreadyAsync).WithMessage("La direccion no puede ser nula una vez ha sido establecida");
-    RuleFor(x => x.Sector).MustAsync(AddressNotBeEmptyIfItIsSetOnClientAlreadyAsync).WithMessage("El sector no puede ser nula una vez ha sido establecida");
-    RuleFor(x => x.ProvinceId).MustAsync(ProvinceNotBeEmptyIfItIsSetOnClientAlreadyAsync).WithMessage("La provincia no puede ser nula una vez ha sido establecida");
+    // RuleFor(x => x.Sector).MustAsync(AddressNotBeEmptyIfItIsSetOnClientAlreadyAsync).WithMessage("El sector no puede ser nula una vez ha sido establecida");
+    // RuleFor(x => x.ProvinceId).MustAsync(ProvinceNotBeEmptyIfItIsSetOnClientAlreadyAsync).WithMessage("La provincia no puede ser nula una vez ha sido establecida");
   }
 
   private async Task<bool> AddressNotBeEmptyIfItIsSetOnClientAlreadyAsync(string? address, CancellationToken token)
@@ -43,16 +43,16 @@ public class UpdateClientRequestValidator : AbstractValidator<UpdateClientReques
 
     return true;
   }
-  private async Task<bool> ProvinceNotBeEmptyIfItIsSetOnClientAlreadyAsync(int? provinceId, CancellationToken token)
-  {
-    var id = Convert.ToInt32(_httpContext.Request.RouteValues["id"]);
-    var employee = await _dbContext.Clients.FindAsync(id);
-
-    if (employee!.ProvinceId != null && string.IsNullOrWhiteSpace(provinceId))
-    {
-      return false;
-    }
-
-    return true;
-  }
+  // private async Task<bool> ProvinceNotBeEmptyIfItIsSetOnClientAlreadyAsync(int? provinceId, CancellationToken token)
+  // {
+  //   var id = Convert.ToInt32(_httpContext.Request.RouteValues["id"]);
+  //   var employee = await _dbContext.Clients.FindAsync(id);
+  //
+  //   if (employee!.ProvinceId != null && string.IsNullOrWhiteSpace(provinceId))
+  //   {
+  //     return false;
+  //   }
+  //
+  //   return true;
+  // }
 }
