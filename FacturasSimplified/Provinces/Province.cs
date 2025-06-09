@@ -5,10 +5,10 @@ namespace Facturas_simplified.Provinces;
 
 public class Province
 {
-  public int Id { get; set; }
-  public required string Name { get; set; }
+    public int Id { get; set; }
+    public required string Name { get; set; }
 
-  [JsonIgnore]
-  // Relaciones
-  public ICollection<Client>? Clients { get; set; }
+    [JsonIgnore]
+    // Relaciones
+    public ICollection<Client>? Clients { get; set; }
 }

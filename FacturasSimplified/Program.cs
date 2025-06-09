@@ -10,42 +10,52 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-  // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Invoices.xml"));
+    // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Invoices.xml"));
 });
 builder.Services.AddProblemDetails();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers(options =>
 {
-  options.Filters.Add<FluentValidationFilter>();
+    options.Filters.Add<FluentValidationFilter>();
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AppDbContext>(options =>
     {
-      options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-      options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:9090") // Cambia si usas otro puerto
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-  var services = scope.ServiceProvider;
-  // SeedData.Seed(services);
-  var context = services.GetRequiredService<AppDbContext>();
+    var services = scope.ServiceProvider;
+    // SeedData.Seed(services);
+    var context = services.GetRequiredService<AppDbContext>();
 
-  // Asegúrate de que la base de datos y tablas existen
-  context.Database.EnsureCreated(); // <-- ¡Esta línea es clave!
+    // Asegúrate de que la base de datos y tablas existen
+    context.Database.EnsureCreated(); // <-- ¡Esta línea es clave!
 
-  // Ahora ejecuta el seeding
-  SeedData.Seed(services);
+    // Ahora ejecuta el seeding
+    SeedData.Seed(services);
 }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.MapControllers();
 
