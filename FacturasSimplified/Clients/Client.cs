@@ -15,7 +15,7 @@ public class Client : AuditableEntity
 
   // Relaciones
   // public ICollection<Factura>? Facturas { get; set; }    
-  public int ProvinceId { get; set; }
+  public int? ProvinceId { get; set; }
   public Province? Province { get; set; }
 
 }

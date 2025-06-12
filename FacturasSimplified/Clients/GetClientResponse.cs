@@ -13,6 +13,6 @@ public class GetClientResponse
   public string? Email { get; set; }
   public string? Sector { get; set; }
 
-  public required int ProvinceId { get; set; }
+  public int? ProvinceId { get; set; }
   public required Province Province { get; set; }
 }

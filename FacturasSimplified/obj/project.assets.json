@@ -31,7 +31,9 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": ["Microsoft.AspNetCore.App"]
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "FluentValidation.DependencyInjectionExtensions/12.0.0-preview1": {
         "type": "package",
@@ -959,7 +961,9 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": ["Microsoft.AspNetCore.App"]
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Swashbuckle.AspNetCore.SwaggerGen/6.6.2": {
         "type": "package",
@@ -989,7 +993,9 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": ["Microsoft.AspNetCore.App"]
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "System.CodeDom/6.0.0": {
         "type": "package",
@@ -3754,28 +3760,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\RonaldCadiz\\.nuget\\packages\\": {},
+    "C:\\Users\\rnldc_kvkk1y2\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\RonaldCadiz\\source\\repos\\FacturasSimplified\\FacturasSimplified\\FacturasSimplified.csproj",
+      "projectUniqueName": "C:\\Users\\rnldc_kvkk1y2\\Desktop\\Projects\\Facturas-simplified\\FacturasSimplified\\FacturasSimplified.csproj",
       "projectName": "FacturasSimplified",
-      "projectPath": "C:\\Users\\RonaldCadiz\\source\\repos\\FacturasSimplified\\FacturasSimplified\\FacturasSimplified.csproj",
-      "packagesPath": "C:\\Users\\RonaldCadiz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\RonaldCadiz\\source\\repos\\FacturasSimplified\\FacturasSimplified\\obj\\",
+      "projectPath": "C:\\Users\\rnldc_kvkk1y2\\Desktop\\Projects\\Facturas-simplified\\FacturasSimplified\\FacturasSimplified.csproj",
+      "packagesPath": "C:\\Users\\rnldc_kvkk1y2\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rnldc_kvkk1y2\\Desktop\\Projects\\Facturas-simplified\\FacturasSimplified\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\RonaldCadiz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rnldc_kvkk1y2\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
-      "originalTargetFrameworks": ["net8.0"],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3785,7 +3794,9 @@
         }
       },
       "warningProperties": {
-        "warnAsError": ["NU1605"]
+        "warnAsError": [
+          "NU1605"
+        ]
       },
       "restoreAuditProperties": {
         "enableAudit": "true",
@@ -3855,4 +3866,3 @@
     }
   }
 }
-
