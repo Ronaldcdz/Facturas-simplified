@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FacturasSimplified")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2de02479dd73531a2cc51da22ea45dcbbe77fa2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83bd58e2ee3ba2b863b85dcff923b712454fbeb0")]
 [assembly: System.Reflection.AssemblyProductAttribute("FacturasSimplified")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FacturasSimplified")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

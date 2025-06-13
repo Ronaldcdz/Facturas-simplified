@@ -1,4 +1,5 @@
 using Facturas_simplified.Abstractions;
+using Facturas_simplified.Invoices;
 using Facturas_simplified.Provinces;
 
 namespace Facturas_simplified.Clients;
@@ -13,8 +14,9 @@ public class Client : AuditableEntity
   public string? Email { get; set; }
   public string? Sector { get; set; }
 
-  // Relaciones
-  // public ICollection<Factura>? Facturas { get; set; }    
+  // navigations properties
+  public ICollection<Invoice>? Invoices { get; set; }
+
   public int? ProvinceId { get; set; }
   public Province? Province { get; set; }
 
