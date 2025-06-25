@@ -1,19 +1,17 @@
+using AutoMapper;
+using Facturas_simplified.Clients.Dtos;
 using Facturas_simplified.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Facturas_simplified.Clients
 {
-  public class ClientController : BaseController
+  public class ClientController(ILogger<ClientController> logger, AppDbContext dbContext, IMapper mapper) : BaseController
   {
-    private readonly ILogger<ClientController> _logger;
+    private readonly ILogger<ClientController> _logger = logger;
 
-    private readonly AppDbContext _dbContext;
-    public ClientController(ILogger<ClientController> logger, AppDbContext dbContext)
-    {
-      _dbContext = dbContext;
-      this._logger = logger;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly IMapper _mapper = mapper;
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<GetClientResponse>), StatusCodes.Status200OK)]
@@ -41,19 +39,20 @@ namespace Facturas_simplified.Clients
         }
       }
       var clients = await query.ToArrayAsync();
+      return Ok(_mapper.Map<ICollection<ClientDto>>(clients));
 
-      return Ok(clients.Select(client => new GetClientResponse
-      {
-        Id = client.Id,
-        Name = client.Name,
-        Rnc = client.Rnc,
-        Direction = client.Direction,
-        ProvinceId = client.ProvinceId,
-        PhoneNumber = client.PhoneNumber,
-        Email = client.Email,
-        Province = client.Province,
-        Sector = client.Sector
-      }));
+      // return Ok(clients.Select(client => new GetClientResponse
+      // {
+      //   Id = client.Id,
+      //   Name = client.Name,
+      //   Rnc = client.Rnc,
+      //   Direction = client.Direction,
+      //   ProvinceId = client.ProvinceId,
+      //   PhoneNumber = client.PhoneNumber,
+      //   Email = client.Email,
+      //   Province = client.Province,
+      //   Sector = client.Sector
+      // }));
     }
 
     [HttpGet("{id}", Name = "GetClientById")]
@@ -88,11 +87,11 @@ namespace Facturas_simplified.Clients
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] CreateClientRequest clientRequest)
     {
-      var validationResults = await ValidateAsync(clientRequest);
-      if (!validationResults.IsValid)
-      {
-        return BadRequest(validationResults.ToModelStateDictionary());
-      }
+      // var validationResults = await ValidateAsync(clientRequest);
+      // if (!validationResults.IsValid)
+      // {
+      //   return BadRequest(validationResults.ToModelStateDictionary());
+      // }
 
 
       var newClient = new Client
@@ -141,11 +140,11 @@ namespace Facturas_simplified.Clients
       }
 
 
-      var validationResults = await ValidateAsync(client);
-      if (!validationResults.IsValid)
-      {
-        return BadRequest(validationResults.ToModelStateDictionary());
-      }
+      // var validationResults = await ValidateAsync(client);
+      // if (!validationResults.IsValid)
+      // {
+      //   return BadRequest(validationResults.ToModelStateDictionary());
+      // }
 
       _logger.LogDebug("Updating client details for ID: {ClientId}", id);
       existingClient.Name = client.Name;

@@ -1,0 +1,38 @@
+# Visual Studio
+.vs/
+.idea/ # For Rider or other JetBrains IDEs
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+publish/
+# Explicitly ignore compiled output within any project folder
+*/bin/
+*/obj/
+*/[Dd]ebug/
+*/[Rr]elease/
+
+# Packages
+packages/
+*.nupkg
+*.suo # Solution User Options file
+*.user # Project User Options file
+*.sqlite # SQLite temporary files sometimes get this extension
+
+# Database files (specifically for your SQLite setup)
+*.db
+*.db-shm
+*.db-wal
+
+# Log files
+*.log
+log/
+
+# Other common ignored files/folders
+temp/
+[Tt]emp/
+Thumbs.db
+Desktop.ini
+.DS_Store # macOS specific

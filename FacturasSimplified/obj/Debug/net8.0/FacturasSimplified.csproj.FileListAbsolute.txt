@@ -330,3 +330,5 @@ C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\o
 C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\obj\Debug\net8.0\FacturasSimplified.pdb
 C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\obj\Debug\net8.0\FacturasSimplified.genruntimeconfig.cache
 C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\obj\Debug\net8.0\ref\FacturasSimplified.dll
+C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\rnldc_kvkk1y2\Desktop\Projects\Facturas-simplified\FacturasSimplified\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

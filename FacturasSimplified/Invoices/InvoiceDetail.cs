@@ -8,7 +8,7 @@ public class InvoiceDetail : AuditableEntity
 
   public int Id { get; set; }
 
-  public string? Description { get; set; }
+  public required string Description { get; set; }
 
   public int Quantity { get; set; }
   public double UnitPrice { get; set; }

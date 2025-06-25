@@ -1,10 +1,12 @@
 ﻿using Facturas_simplified.Abstractions;
+using Facturas_simplified.Invoices;
 
 namespace Facturas_simplified.Ncfs;
 
 public class NcfRange : AuditableEntity
 {
   public int Id { get; set; }
+  public required InvoiceType Type { get; set; }
   public string? Description { get; set; }
 
   public required DateTime ValidFrom { get; set; }
@@ -15,7 +17,7 @@ public class NcfRange : AuditableEntity
   public int NumberMax { get; set; }
   public int CurrentNumber { get; set; }
 
-  public required NcfRangeStatus NcfRangeStatus { get; set; }
+  public NcfRangeStatus NcfRangeStatus { get; set; } = NcfRangeStatus.Active;
 
   // navigation props
   public ICollection<Ncf>? Ncfs { get; set; }
