@@ -10,445 +10,445 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Facturas_simplified.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20250623133418_MoveInvoiceTypeFromNcfToNcfRange")]
-    partial class MoveInvoiceTypeFromNcfToNcfRange
+  [DbContext(typeof(AppDbContext))]
+  [Migration("20250623133418_MoveInvoiceTypeFromNcfToNcfRange")]
+  partial class MoveInvoiceTypeFromNcfToNcfRange
+  {
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
+      modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
 
-            modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Direction")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Direction")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Email")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Name")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+            b.Property<string>("PhoneNumber")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("INTEGER");
+            b.Property<int?>("ProvinceId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("Rnc")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Rnc")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Sector")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Sector")
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("ProvinceId");
+            b.HasIndex("ProvinceId");
 
-                    b.ToTable("Clients");
-                });
+            b.ToTable("Clients");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("AttentionTo")
-                        .HasColumnType("TEXT");
+            b.Property<string>("AttentionTo")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("ClientId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("InvoiceStatus")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("InvoiceStatus")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<int>("InvoiceType")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("InvoiceType")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("IssuedAt")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("IssuedAt")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("NcfId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NcfId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Note")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("PaidAt")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime?>("PaidAt")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Project")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Project")
+                      .HasColumnType("TEXT");
 
-                    b.Property<double>("Subtotal")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("Subtotal")
+                      .HasColumnType("REAL");
 
-                    b.Property<double>("TaxAmount")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("TaxAmount")
+                      .HasColumnType("REAL");
 
-                    b.Property<double>("TaxPercentage")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("TaxPercentage")
+                      .HasColumnType("REAL");
 
-                    b.Property<double>("Total")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("Total")
+                      .HasColumnType("REAL");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+            b.HasIndex("ClientId");
 
-                    b.HasIndex("NcfId")
-                        .IsUnique();
+            b.HasIndex("NcfId")
+                      .IsUnique();
 
-                    b.ToTable("Invoices");
-                });
+            b.ToTable("Invoices");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Invoices.InvoiceDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Invoices.InvoiceDetail", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Description")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("InvoiceId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("Quantity")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("SectionTitle")
-                        .HasColumnType("TEXT");
+            b.Property<string>("SectionTitle")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("ServiceId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<double>("SubTotal")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("SubTotal")
+                      .HasColumnType("REAL");
 
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("UnitPrice")
+                      .HasColumnType("REAL");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("InvoiceId");
+            b.HasIndex("InvoiceId");
 
-                    b.HasIndex("ServiceId");
+            b.HasIndex("ServiceId");
 
-                    b.ToTable("InvoiceDetails");
-                });
+            b.ToTable("InvoiceDetails");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("AssignedAt")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("AssignedAt")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("InvoiceId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("NcfNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("NcfNumber")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("NcfRangeId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NcfRangeId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<int>("NcfStatus")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NcfStatus")
+                      .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NcfRangeId");
+            b.HasIndex("NcfRangeId");
 
-                    b.ToTable("Ncfs");
-                });
+            b.ToTable("Ncfs");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Ncfs.NcfRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Ncfs.NcfRange", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("CurrentNumber")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("CurrentNumber")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Description")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("NcfRangeStatus")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NcfRangeStatus")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<int>("NumberMax")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NumberMax")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<int>("NumberMin")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("NumberMin")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("Type")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("ValidFrom")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ValidTo")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("ValidTo")
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("NcfRanges");
-                });
+            b.ToTable("NcfRanges");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Payments.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Payments.Payment", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("Amount")
+                      .HasColumnType("REAL");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("CreatedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("InvoiceId")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("TEXT");
+            b.Property<string>("LastModifiedBy")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastModifiedOn")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("LastModifiedOn")
+                      .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("PaidAt")
-                        .HasColumnType("TEXT");
+            b.Property<DateTime>("PaidAt")
+                      .HasColumnType("TEXT");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("INTEGER");
+            b.Property<int>("PaymentMethod")
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("Reference")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Reference")
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("InvoiceId");
+            b.HasIndex("InvoiceId");
 
-                    b.ToTable("Payments");
-                });
+            b.ToTable("Payments");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Provinces.Province", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Provinces.Province", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Name")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("Provinces");
-                });
+            b.ToTable("Provinces");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Services.Service", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+      modelBuilder.Entity("Facturas_simplified.Services.Service", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("INTEGER");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("REAL");
+            b.Property<decimal>("Amount")
+                      .HasColumnType("REAL");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Description")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+            b.Property<string>("Name")
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("Services");
-                });
+            b.ToTable("Services");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
-                {
-                    b.HasOne("Facturas_simplified.Provinces.Province", "Province")
-                        .WithMany("Clients")
-                        .HasForeignKey("ProvinceId");
+      modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
+          {
+            b.HasOne("Facturas_simplified.Provinces.Province", "Province")
+                      .WithMany("Clients")
+                      .HasForeignKey("ProvinceId");
 
-                    b.Navigation("Province");
-                });
+            b.Navigation("Province");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
-                {
-                    b.HasOne("Facturas_simplified.Clients.Client", "Client")
-                        .WithMany("Invoices")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
+          {
+            b.HasOne("Facturas_simplified.Clients.Client", "Client")
+                      .WithMany("Invoices")
+                      .HasForeignKey("ClientId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("Facturas_simplified.Ncfs.Ncf", "Ncf")
-                        .WithOne("Invoice")
-                        .HasForeignKey("Facturas_simplified.Invoices.Invoice", "NcfId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("Facturas_simplified.Ncfs.Ncf", "Ncf")
+                      .WithOne("Invoice")
+                      .HasForeignKey("Facturas_simplified.Invoices.Invoice", "NcfId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Client");
+            b.Navigation("Client");
 
-                    b.Navigation("Ncf");
-                });
+            b.Navigation("Ncf");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Invoices.InvoiceDetail", b =>
-                {
-                    b.HasOne("Facturas_simplified.Invoices.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("Facturas_simplified.Invoices.InvoiceDetail", b =>
+          {
+            b.HasOne("Facturas_simplified.Invoices.Invoice", "Invoice")
+                      .WithMany("InvoiceDetails")
+                      .HasForeignKey("InvoiceId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("Facturas_simplified.Services.Service", "Service")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("Facturas_simplified.Services.Service", "Service")
+                      .WithMany("InvoiceDetails")
+                      .HasForeignKey("ServiceId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Invoice");
+            b.Navigation("Invoice");
 
-                    b.Navigation("Service");
-                });
+            b.Navigation("Service");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
-                {
-                    b.HasOne("Facturas_simplified.Ncfs.NcfRange", "NcfRange")
-                        .WithMany("Ncfs")
-                        .HasForeignKey("NcfRangeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
+          {
+            b.HasOne("Facturas_simplified.Ncfs.NcfRange", "NcfRange")
+                      .WithMany("Ncfs")
+                      .HasForeignKey("NcfRangeId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("NcfRange");
-                });
+            b.Navigation("NcfRange");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Payments.Payment", b =>
-                {
-                    b.HasOne("Facturas_simplified.Invoices.Invoice", "Invoice")
-                        .WithMany("Payments")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("Facturas_simplified.Payments.Payment", b =>
+          {
+            b.HasOne("Facturas_simplified.Invoices.Invoice", "Invoice")
+                      .WithMany("Payments")
+                      .HasForeignKey("InvoiceId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Invoice");
-                });
+            b.Navigation("Invoice");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
-                {
-                    b.Navigation("Invoices");
-                });
+      modelBuilder.Entity("Facturas_simplified.Clients.Client", b =>
+          {
+            b.Navigation("Invoices");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
-                {
-                    b.Navigation("InvoiceDetails");
+      modelBuilder.Entity("Facturas_simplified.Invoices.Invoice", b =>
+          {
+            b.Navigation("InvoiceDetails");
 
-                    b.Navigation("Payments");
-                });
+            b.Navigation("Payments");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
-                {
-                    b.Navigation("Invoice");
-                });
+      modelBuilder.Entity("Facturas_simplified.Ncfs.Ncf", b =>
+          {
+            b.Navigation("Invoice");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Ncfs.NcfRange", b =>
-                {
-                    b.Navigation("Ncfs");
-                });
+      modelBuilder.Entity("Facturas_simplified.Ncfs.NcfRange", b =>
+          {
+            b.Navigation("Ncfs");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Provinces.Province", b =>
-                {
-                    b.Navigation("Clients");
-                });
+      modelBuilder.Entity("Facturas_simplified.Provinces.Province", b =>
+          {
+            b.Navigation("Clients");
+          });
 
-            modelBuilder.Entity("Facturas_simplified.Services.Service", b =>
-                {
-                    b.Navigation("InvoiceDetails");
-                });
+      modelBuilder.Entity("Facturas_simplified.Services.Service", b =>
+          {
+            b.Navigation("InvoiceDetails");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

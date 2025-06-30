@@ -64,19 +64,5 @@ namespace Facturas_simplified.Invoices
     }
 
 
-    private static string GenerateNcfNumber(InvoiceType type, int currentNumber, int sequenceLength = 8)
-    {
-      string prefix = type switch
-      {
-        InvoiceType.Fiscal => "B01",
-        InvoiceType.Special => "B14",
-        InvoiceType.Proforma => "P00", // o cualquier otro
-        _ => throw new ArgumentOutOfRangeException(nameof(type), "Unsupported invoice type")
-      };
-
-      string paddedNumber = currentNumber.ToString().PadLeft(sequenceLength, '0');
-
-      return prefix + paddedNumber;
-    }
   }
 }

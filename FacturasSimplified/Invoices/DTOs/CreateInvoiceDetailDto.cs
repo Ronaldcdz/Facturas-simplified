@@ -11,8 +11,8 @@ public class CreateInvoiceDetailDto()
   public required string Description { get; set; }
 
   public required int Quantity { get; set; }
-  public required double UnitPrice { get; set; }
-  public double SubTotal { get; set; }
+  public required decimal UnitPrice { get; set; }
+  public decimal SubTotal { get; set; }
 
   public string? SectionTitle { get; set; }
 

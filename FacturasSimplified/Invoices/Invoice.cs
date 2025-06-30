@@ -15,10 +15,10 @@ public class Invoice : AuditableEntity
   public DateTime? PaidAt { get; set; }
   public required InvoiceType InvoiceType { get; set; }
 
-  public double Subtotal { get; set; }
-  public double TaxPercentage { get; set; } = 0.18;
-  public double TaxAmount { get; set; }
-  public double Total { get; set; }
+  public decimal Subtotal { get; set; }
+  public decimal TaxPercentage { get; set; } = 0.18M;
+  public decimal TaxAmount { get; set; }
+  public decimal Total { get; set; }
 
   public string? Note { get; set; }
   public string? AttentionTo { get; set; }

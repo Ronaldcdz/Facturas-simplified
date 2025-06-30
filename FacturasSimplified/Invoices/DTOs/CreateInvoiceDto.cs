@@ -23,13 +23,13 @@ public class CreateInvoiceDto
 
 
   [JsonIgnore]
-  public double Subtotal { get; set; }
+  public decimal Subtotal { get; set; }
   [JsonIgnore]
-  public double TaxPercentage { get; set; } = 0.18;
+  public decimal TaxPercentage { get; set; } = 0.18M;
   [JsonIgnore]
-  public double TaxAmount { get; set; }
+  public decimal TaxAmount { get; set; }
   [JsonIgnore]
-  public double Total { get; set; }
+  public decimal Total { get; set; }
 
 }
 

@@ -8,7 +8,7 @@ public class Payment : AuditableEntity
   public int Id { get; set; }
 
   public DateTime PaidAt { get; set; }
-  public required double Amount { get; set; }
+  public required decimal Amount { get; set; }
   public required PaymentMethod PaymentMethod { get; set; } = PaymentMethod.BankTransfer;
 
   public string? Reference { get; set; }

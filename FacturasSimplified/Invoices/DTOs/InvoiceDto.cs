@@ -10,9 +10,9 @@ namespace Facturas_simplified.Invoices.DTOs
     public required DateTime IssuedAt { get; set; }
     public InvoiceType InvoiceType { get; set; }
 
-    public double Subtotal { get; set; }
-    public double TaxAmount { get; set; }
-    public double Total { get; set; }
+    public decimal Subtotal { get; set; }
+    public decimal TaxAmount { get; set; }
+    public decimal Total { get; set; }
 
     public string? Note { get; set; }
     public string? AttentionTo { get; set; }

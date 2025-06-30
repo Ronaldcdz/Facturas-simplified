@@ -37,6 +37,7 @@ namespace Facturas_simplified.Ncfs
           await _dbContext.SaveChangesAsync();
           return Result<int>.Failure("No quedan más NCFs para usar. El rango se ha agotado.");
         }
+        // TODO: buscar si hay algun ncf number disponible para agregar
 
         ncfRange.CurrentNumber++;
         string nextNcfNumber = GenerateNcfNumber(invoiceType, ncfRange.CurrentNumber);
