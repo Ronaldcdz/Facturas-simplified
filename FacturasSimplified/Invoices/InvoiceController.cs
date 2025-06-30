@@ -2,9 +2,8 @@ using AutoMapper;
 using Facturas_simplified.Database;
 using Facturas_simplified.Invoices.DTOs;
 using Facturas_simplified.Ncfs;
-using Facturas_simplified.Services;
 using Facturas_simplified.Utils;
-using FacturasSimplified.Services.Dtos;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,90 +51,19 @@ namespace Facturas_simplified.Invoices
         return BadRequest(validationResults.ToModelStateDictionary());
       }
 
+      InvoiceService invoiceService = new(_dbContext, _mapper);
+      var invoiceCreated = await invoiceService.CreateInvoiceAsync(invoiceDto);
 
-      var ncfRange = await _dbContext.NcfRanges.FirstOrDefaultAsync(n => n.NcfRangeStatus == NcfRangeStatus.Active && n.Type == invoiceDto.InvoiceType);
-      if (ncfRange is null)
+      if (!invoiceCreated.IsSuccess)
       {
-        return BadRequest("No existen Ncfs validos para este tipo de factura");
-      }
-
-      if (ncfRange.CurrentNumber >= ncfRange.NumberMax)
-      {
-        //usar logica para marcar como agotado
-        return BadRequest("No quedan mas NCF para usar");
+        return BadRequest(invoiceCreated.ErrorMessage);
       }
 
 
-      ncfRange.CurrentNumber++;
-      // _dbContext.Entry(ncfRange).State = EntityState.Modified;
-      await _dbContext.SaveChangesAsync();
-
-      //agregar capa de servicio que se encargue de verificar si no esta vencido o agregar validaciones para saber si el numero es valido
-
-      var ncf = await _dbContext.AddAsync(new Ncf { NcfNumber = GenerateNcfNumber(invoiceDto.InvoiceType, ncfRange.CurrentNumber), NcfRangeId = ncfRange.Id });
-      await _dbContext.SaveChangesAsync();
-
-
-      var invoiceMapped = _mapper.Map<Invoice>(invoiceDto);
-      invoiceMapped.NcfId = ncf.Entity.Id;
-      var newInvoiceWithId = await _dbContext.Invoices.AddAsync(_mapper.Map<Invoice>(invoiceMapped));
-      await _dbContext.SaveChangesAsync();
-
-
-
-      var result = await AddServicesToBd(invoiceDto.InvoiceDetails, newInvoiceWithId.Entity.Id, invoiceDto.TaxPercentage);
-      if (!result.IsSuccess)
-      {
-        return BadRequest("Hubo un problema agregando con los servicios");
-      }
-
-      newInvoiceWithId.Entity.Total = result.Value.Total;
-      newInvoiceWithId.Entity.Subtotal = result.Value.Subtotal;
-      newInvoiceWithId.Entity.TaxAmount = result.Value.TaxAmount;
-      await _dbContext.SaveChangesAsync();
-
-      return CreatedAtAction(nameof(GetById), new { id = newInvoiceWithId.Entity.Id }, invoiceDto);
+      return CreatedAtAction(nameof(GetById), new { id = invoiceCreated.Value.Id }, invoiceCreated.Value);
     }
 
-    private async Task<Result<InvoiceCalculatedAmountsDto>> AddServicesToBd(ICollection<CreateInvoiceDetailDto> invoiceDetails, int invoiceId, double taxPercentage)
-    {
-      try
-      {
 
-        double subTotal = 0;
-        foreach (var detail in invoiceDetails)
-        {
-          var serviceId = await _dbContext.Services.AddAsync(_mapper.Map<Service>(detail));
-          await _dbContext.SaveChangesAsync();
-
-          InvoiceDetail invoiceDetail = _mapper.Map<InvoiceDetail>(detail);
-          invoiceDetail.InvoiceId = invoiceId;
-          invoiceDetail.ServiceId = serviceId.Entity.Id;
-          invoiceDetail.SubTotal = detail.UnitPrice * detail.Quantity;
-          subTotal += invoiceDetail.SubTotal;
-
-          await _dbContext.InvoiceDetails.AddAsync(invoiceDetail);
-          await _dbContext.SaveChangesAsync();
-
-        }
-
-        double taxAmount = subTotal * taxPercentage;
-        double total = taxAmount + subTotal;
-        InvoiceCalculatedAmountsDto invoiceData = new()
-        {
-          Subtotal = subTotal,
-          TaxAmount = taxAmount,
-          Total = total
-
-        };
-        return Result<InvoiceCalculatedAmountsDto>.Success(invoiceData);
-      }
-      catch (System.Exception)
-      {
-        return Result<InvoiceCalculatedAmountsDto>.Failure("Algo paso por aqui");
-        throw;
-      }
-    }
     private static string GenerateNcfNumber(InvoiceType type, int currentNumber, int sequenceLength = 8)
     {
       string prefix = type switch

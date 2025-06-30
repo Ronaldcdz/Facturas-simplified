@@ -4,7 +4,7 @@ using Facturas_simplified.Invoices;
 using Facturas_simplified.Ncfs;
 using Facturas_simplified.Payments;
 using Facturas_simplified.Provinces;
-using Facturas_simplified.Services;
+using Facturas_simplified.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace Facturas_simplified.Database;
@@ -22,7 +22,7 @@ public class AppDbContext : DbContext
   public DbSet<Payment> Payments { get; set; }
   public DbSet<Ncf> Ncfs { get; set; }
   public DbSet<NcfRange> NcfRanges { get; set; }
-  public DbSet<Service> Services { get; set; }
+  public DbSet<Product> Products { get; set; }
 
   public override int SaveChanges()
   {

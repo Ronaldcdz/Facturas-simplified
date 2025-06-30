@@ -1,8 +1,8 @@
 ﻿using Facturas_simplified.Invoices;
 
-namespace Facturas_simplified.Services;
+namespace Facturas_simplified.Products;
 
-public class Service
+public class Product
 {
   public int Id { get; set; }
   public string? Name { get; set; }

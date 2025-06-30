@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Facturas_simplified.Invoices.DTOs;
-using Facturas_simplified.Services;
-using FacturasSimplified.Services.Dtos;
+using Facturas_simplified.Products;
+using Facturas_simplified.Products.Dtos;
 
 namespace Facturas_simplified.Invoices;
 
@@ -13,7 +13,7 @@ public class InvoiceMapping : Profile
     CreateMap<CreateInvoiceDto, Invoice>()
       .ForMember(dest => dest.InvoiceDetails, opt => opt.Ignore());
 
-    CreateMap<CreateInvoiceDetailDto, CreateServiceDto>()
+    CreateMap<CreateInvoiceDetailDto, CreateProductDto>()
       .ForMember(dest => dest.Name, opt => opt.Ignore())
       .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.UnitPrice));
 
@@ -21,9 +21,9 @@ public class InvoiceMapping : Profile
     CreateMap<CreateInvoiceDetailDto, InvoiceDetail>()
       .ForMember(dest => dest.Id, opt => opt.Ignore())
       .ForMember(dest => dest.Invoice, opt => opt.Ignore())
-      .ForMember(dest => dest.Service, opt => opt.Ignore());
+      .ForMember(dest => dest.Product, opt => opt.Ignore());
 
-    CreateMap<CreateInvoiceDetailDto, Service>()
+    CreateMap<CreateInvoiceDetailDto, Product>()
       .ForMember(dest => dest.Id, opt => opt.Ignore())
       .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.UnitPrice))
       .ForMember(dest => dest.InvoiceDetails, opt => opt.Ignore());

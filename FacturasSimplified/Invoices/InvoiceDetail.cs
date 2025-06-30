@@ -1,5 +1,5 @@
 ﻿using Facturas_simplified.Abstractions;
-using Facturas_simplified.Services;
+using Facturas_simplified.Products;
 
 namespace Facturas_simplified.Invoices;
 
@@ -20,6 +20,6 @@ public class InvoiceDetail : AuditableEntity
   public int InvoiceId { get; set; }
   public Invoice? Invoice { get; set; }
 
-  public int ServiceId { get; set; }
-  public Service? Service { get; set; }
+  public int ProductId { get; set; }
+  public Product? Product { get; set; }
 }

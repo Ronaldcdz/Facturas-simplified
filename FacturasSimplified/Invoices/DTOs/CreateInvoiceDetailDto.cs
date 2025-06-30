@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 using Facturas_simplified.Database;
-using Facturas_simplified.Services;
+using Facturas_simplified.Products;
 using FluentValidation;
 
 namespace Facturas_simplified.Invoices.DTOs;
 
-public class CreateInvoiceDetailDto ()
+public class CreateInvoiceDetailDto()
 {
 
   public required string Description { get; set; }
@@ -21,9 +21,9 @@ public class CreateInvoiceDetailDto ()
   [JsonIgnore]
   public Invoice? Invoice { get; set; }
 
-  public int? ServiceId { get; set; }
+  public int? ProductId { get; set; }
   [JsonIgnore]
-  public Service? Service { get; set; }
+  public Product? Product { get; set; }
 }
 
 

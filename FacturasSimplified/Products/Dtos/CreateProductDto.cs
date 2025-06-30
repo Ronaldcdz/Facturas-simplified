@@ -1,6 +1,6 @@
-namespace FacturasSimplified.Services.Dtos
+namespace Facturas_simplified.Products.Dtos
 {
-  public class CreateServiceDto
+  public class CreateProductDto
   {
     public string? Name { get; set; }
 

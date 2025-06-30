@@ -1,4 +1,4 @@
-using Facturas_simplified.Services.Dtos;
+using Facturas_simplified.Products.Dtos;
 
 namespace Facturas_simplified.Invoices.DTOs
 {
