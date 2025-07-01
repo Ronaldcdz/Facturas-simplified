@@ -4,6 +4,7 @@ using Facturas_simplified.Invoices.DTOs;
 using Facturas_simplified.Ncfs;
 using Facturas_simplified.Products;
 using Facturas_simplified.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace Facturas_simplified.Invoices
 {
@@ -12,6 +13,32 @@ namespace Facturas_simplified.Invoices
     private readonly AppDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
 
+
+    public async Task<Result<InvoiceDto>> UpdateInvoiceAsync(UpdateInvoiceDto updateInvoiceDto, int invoiceId)
+    {
+
+      if (invoiceId != updateInvoiceDto.Id)
+      {
+        return Result<InvoiceDto>.Failure("El ID de la URL no coincide con el del cuerpo.");
+      }
+
+      var currentInvoice = await _dbContext.Invoices.FirstOrDefaultAsync(i => i.Id == invoiceId);
+      if (currentInvoice is null)
+      {
+        return Result<InvoiceDto>.Failure("Esta Factura no existe");
+      }
+
+      ProductService productService = new(_dbContext, _mapper);
+      var result = await productService.UpdateProductsAsync(updateInvoiceDto.InvoiceDetails.ToList(), invoiceId, currentInvoice.TaxAmount);
+
+      var invoiceWithMappedData = _mapper.Map<Invoice>(updateInvoiceDto);
+      invoiceWithMappedData.Subtotal = result.Value.Subtotal;
+      invoiceWithMappedData.Total = result.Value.Total;
+      invoiceWithMappedData.TaxAmount = result.Value.TaxAmount;
+
+      await _dbContext.SaveChangesAsync();
+      return Result<InvoiceDto>.Success(_mapper.Map<InvoiceDto>(invoiceWithMappedData));
+    }
 
     public async Task<Result<InvoiceDto>> CreateInvoiceAsync(CreateInvoiceDto createInvoiceDto)
     {

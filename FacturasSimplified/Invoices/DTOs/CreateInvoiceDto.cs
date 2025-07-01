@@ -42,6 +42,7 @@ public class CreateInvoiceDtoValidator : AbstractValidator<CreateInvoiceDto>
     _dbContext = dbContext;
     RuleFor(x => x.ClientId).MustAsync(ClientExists).WithMessage("El cliente no existe");
     RuleFor(x => x.InvoiceType).Must(IsInvoiceTypeValid).WithMessage("El tipo de factura no es valido");
+    RuleFor(x => x.InvoiceDetails).NotNull().WithMessage("Debe seleccionar al menos un trabajo");
     RuleForEach(x => x.InvoiceDetails).SetValidator(new CreateInvoiceDetailDtoValidator());
   }
 

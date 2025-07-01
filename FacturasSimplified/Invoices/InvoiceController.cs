@@ -63,6 +63,31 @@ namespace Facturas_simplified.Invoices
       return CreatedAtAction(nameof(GetById), new { id = invoiceCreated.Value.Id }, invoiceCreated.Value);
     }
 
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(InvoiceDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateInvoiceDto invoiceDto)
+    {
+      var validationResults = await ValidateAsync(invoiceDto);
+      if (!validationResults.IsValid)
+      {
+        return BadRequest(validationResults.ToModelStateDictionary());
+      }
+
+      InvoiceService invoiceService = new(_dbContext, _mapper);
+      var invoiceCreated = await invoiceService.UpdateInvoiceAsync(invoiceDto, id);
+
+      if (!invoiceCreated.IsSuccess)
+      {
+        return BadRequest(invoiceCreated.ErrorMessage);
+      }
+
+
+      return CreatedAtAction(nameof(GetById), new { id = invoiceCreated.Value.Id }, invoiceCreated.Value);
+    }
+
 
   }
 }

@@ -33,5 +33,19 @@ public class InvoiceMapping : Profile
 
 
     CreateMap<InvoiceDetail, InvoiceDetailDto>();
+
+
+    CreateMap<UpdateInvoiceDto, Invoice>();
+
+    CreateMap<UpdateInvoiceDto, CreateInvoiceDetailDto>();
+
+    CreateMap<UpdateInvoiceDetailDto, CreateInvoiceDetailDto>();
+
+    CreateMap<UpdateInvoiceDetailDto, InvoiceDetail>();
+
+    CreateMap<UpdateInvoiceDetailDto, Product>()
+      .ForMember(dest => dest.InvoiceDetails, opt => opt.Ignore());
+
+
   }
 }

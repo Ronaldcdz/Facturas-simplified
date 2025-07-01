@@ -6,5 +6,6 @@ namespace Facturas_simplified.Products
   public interface IProductService
   {
     Task<Result<InvoiceCalculatedAmountsDto>> AddProductsAsync(List<CreateInvoiceDetailDto> createInvoiceDto, int invoiceId, decimal invoiceTax);
+    Task<Result<InvoiceCalculatedAmountsDto>> UpdateProductsAsync(List<UpdateInvoiceDetailDto> updateInvoiceDto, int invoiceId, decimal invoiceTax);
   }
 }

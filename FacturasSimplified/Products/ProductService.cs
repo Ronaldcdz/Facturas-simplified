@@ -11,6 +11,29 @@ namespace Facturas_simplified.Products
     private readonly AppDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
 
+    public async Task<Result<InvoiceCalculatedAmountsDto>> UpdateProductsAsync(List<UpdateInvoiceDetailDto> updateInvoiceDto, int invoiceId, decimal invoiceTax)
+    {
+      var products = _mapper.Map<List<Product>>(updateInvoiceDto);
+
+      var productsToAdd = products.Where(p => p.Id == 0).ToList();
+      await _dbContext.Products.AddRangeAsync(productsToAdd);
+      await _dbContext.SaveChangesAsync();
+
+      var deatilsToAdd = _mapper.Map<List<CreateInvoiceDetailDto>>(updateInvoiceDto.Where(i => i.ProductId == 0).ToList());
+      var newDetails = BuildInvoiceDetails(deatilsToAdd, productsToAdd, invoiceId);
+      await _dbContext.InvoiceDetails.AddRangeAsync(newDetails);
+      await _dbContext.SaveChangesAsync();
+
+      var productsAdded = products.Where(p => p.Id != 0).ToList();
+      var currentDetailsMapped = _mapper.Map<List<CreateInvoiceDetailDto>>(updateInvoiceDto.Where(i => i.ProductId != 0).ToList());
+      var currentDetails = BuildInvoiceDetails(currentDetailsMapped, productsAdded, invoiceId);
+
+
+      var allDetails = newDetails.Concat(currentDetails).ToList();
+
+      var totals = CalculateTotals(allDetails, invoiceTax);
+      return Result<InvoiceCalculatedAmountsDto>.Success(totals);
+    }
     public async Task<Result<InvoiceCalculatedAmountsDto>> AddProductsAsync(List<CreateInvoiceDetailDto> createInvoiceDto, int invoiceId, decimal invoiceTax)
     {
       var products = MapAndCreateProducts([.. createInvoiceDto]);
