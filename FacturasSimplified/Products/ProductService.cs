@@ -69,7 +69,6 @@ namespace Facturas_simplified.Products
 
     private InvoiceCalculatedAmountsDto CalculateTotals(List<InvoiceDetail> dtos, decimal tax)
     {
-      var invoiceDetailEntities = _mapper.Map<List<InvoiceDetail>>(dtos);
       decimal subTotal = 0;
 
       foreach (var detail in dtos)

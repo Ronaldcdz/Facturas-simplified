@@ -22,22 +22,40 @@ namespace Facturas_simplified.Invoices
         return Result<InvoiceDto>.Failure("El ID de la URL no coincide con el del cuerpo.");
       }
 
-      var currentInvoice = await _dbContext.Invoices.FirstOrDefaultAsync(i => i.Id == invoiceId);
+      var currentInvoice = await _dbContext.Invoices.Include(i => i.InvoiceDetails).ThenInclude(i => i.Product).FirstOrDefaultAsync(i => i.Id == invoiceId);
       if (currentInvoice is null)
       {
         return Result<InvoiceDto>.Failure("Esta Factura no existe");
       }
 
-      ProductService productService = new(_dbContext, _mapper);
-      var result = await productService.UpdateProductsAsync(updateInvoiceDto.InvoiceDetails.ToList(), invoiceId, currentInvoice.TaxAmount);
+      using var transaction = await _dbContext.Database.BeginTransactionAsync();
+      try
+      {
 
-      var invoiceWithMappedData = _mapper.Map<Invoice>(updateInvoiceDto);
-      invoiceWithMappedData.Subtotal = result.Value.Subtotal;
-      invoiceWithMappedData.Total = result.Value.Total;
-      invoiceWithMappedData.TaxAmount = result.Value.TaxAmount;
+        var updateResult = await SyncInvoiceDetailsAsync(updateInvoiceDto.InvoiceDetails.ToList(), currentInvoice);
 
-      await _dbContext.SaveChangesAsync();
-      return Result<InvoiceDto>.Success(_mapper.Map<InvoiceDto>(invoiceWithMappedData));
+        if (!updateResult.IsSuccess)
+        {
+          return Result<InvoiceDto>.Failure(updateResult.ErrorMessage);
+        }
+
+        _mapper.Map(updateInvoiceDto, currentInvoice); // solo actualiza propiedades necesarias
+
+        currentInvoice.Subtotal = updateResult.Value.Subtotal;
+        currentInvoice.TaxAmount = updateResult.Value.TaxAmount;
+        currentInvoice.Total = updateResult.Value.Total;
+
+        await _dbContext.SaveChangesAsync();
+        await transaction.CommitAsync();
+
+        var invoiceDto = _mapper.Map<InvoiceDto>(currentInvoice);
+        return Result<InvoiceDto>.Success(invoiceDto);
+      }
+      catch (System.Exception ex)
+      {
+        await transaction.RollbackAsync();
+        return Result<InvoiceDto>.Failure($"Ocurrió un error inesperado al asignar el NCF: {ex.Message}");
+      }
     }
 
     public async Task<Result<InvoiceDto>> CreateInvoiceAsync(CreateInvoiceDto createInvoiceDto)
@@ -92,6 +110,80 @@ namespace Facturas_simplified.Invoices
         await transaction.RollbackAsync();
         return Result<InvoiceDto>.Failure($"Ocurrió un error inesperado al asignar el NCF: {ex.Message}");
       }
+    }
+
+
+    private async Task<Result<InvoiceCalculatedAmountsDto>> SyncInvoiceDetailsAsync(
+        List<UpdateInvoiceDetailDto> newDetails,
+        Invoice currentInvoice)
+    {
+      var detailsToDelete = currentInvoice.InvoiceDetails.ExceptBy(
+                 newDetails.Select(n => n.Id),
+                 d => d.Id
+             ).ToList();
+
+      if (detailsToDelete.Count > 0)
+      {
+        _dbContext.InvoiceDetails.RemoveRange(detailsToDelete);
+        _dbContext.Products.RemoveRange(detailsToDelete.Select(d => d.Product));
+      }
+
+      var detailsToUpdate = currentInvoice.InvoiceDetails.IntersectBy(
+                 newDetails.Select(n => n.Id),
+                 d => d.Id
+             ).ToList();
+
+      foreach (var detailInDb in detailsToUpdate)
+      {
+        var updatedData = newDetails.FirstOrDefault(d => d.Id == detailInDb.Id);
+
+        if (updatedData != null)
+        {
+          detailInDb.Description = updatedData.Description;
+          detailInDb.Quantity = updatedData.Quantity;
+          detailInDb.UnitPrice = updatedData.UnitPrice;
+          detailInDb.SectionTitle = updatedData.SectionTitle;
+          detailInDb.SubTotal = updatedData.Quantity * updatedData.UnitPrice;
+        }
+      }
+
+
+
+      var newInvoiceDetails = newDetails.Where(n => n.Id == 0).ToList();
+      if (newInvoiceDetails.Count > 0)
+      {
+        // si hay InvoiceDetails con Id = 0 tambien lo seran los productos
+        // porque no se permiten agregar desde un select sino que se agregan
+        // on the fly
+        var newProductsToAdd = newInvoiceDetails.Select(n => n.Product).ToList();
+        await _dbContext.Products.AddRangeAsync(newProductsToAdd);
+        await _dbContext.SaveChangesAsync();
+
+        for (int i = 0; i < newInvoiceDetails.Count; i++)
+        {
+          newInvoiceDetails[i].ProductId = newProductsToAdd[i].Id;
+          newInvoiceDetails[i].InvoiceId = currentInvoice.Id;
+          newInvoiceDetails[i].SubTotal = newInvoiceDetails[i].UnitPrice * newInvoiceDetails[i].Quantity;
+        }
+
+        await _dbContext.InvoiceDetails.AddRangeAsync(_mapper.Map<List<InvoiceDetail>>(newInvoiceDetails));
+      }
+
+      var allDetails = detailsToUpdate.Concat(_mapper.Map<List<InvoiceDetail>>(newInvoiceDetails)).ToList();
+      _dbContext.InvoiceDetails.UpdateRange(allDetails);
+
+      var allSubtotal = allDetails.Select(a => a.SubTotal).Sum();
+      var taxAmount = allSubtotal * currentInvoice.TaxPercentage;
+      var total = allSubtotal + taxAmount;
+
+
+      // await _dbContext.SaveChangesAsync();
+      return Result<InvoiceCalculatedAmountsDto>.Success(new InvoiceCalculatedAmountsDto
+      {
+        Subtotal = allSubtotal,
+        TaxAmount = taxAmount,
+        Total = total
+      });
     }
   }
 }

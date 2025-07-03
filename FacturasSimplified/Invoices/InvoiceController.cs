@@ -1,9 +1,7 @@
 using AutoMapper;
 using Facturas_simplified.Database;
 using Facturas_simplified.Invoices.DTOs;
-using Facturas_simplified.Ncfs;
 using Facturas_simplified.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

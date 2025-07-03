@@ -35,7 +35,8 @@ public class InvoiceMapping : Profile
     CreateMap<InvoiceDetail, InvoiceDetailDto>();
 
 
-    CreateMap<UpdateInvoiceDto, Invoice>();
+    CreateMap<UpdateInvoiceDto, Invoice>()
+      .ForMember(dest => dest.InvoiceDetails, opt => opt.Ignore());
 
     CreateMap<UpdateInvoiceDto, CreateInvoiceDetailDto>();
 
