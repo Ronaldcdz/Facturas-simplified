@@ -1,20 +1,16 @@
 using Facturas_simplified.Abstractions;
-using Facturas_simplified.Clients;
-using Facturas_simplified.Invoices;
-using Facturas_simplified.Ncfs;
-using Facturas_simplified.Payments;
-using Facturas_simplified.Provinces;
-using Facturas_simplified.Products;
 using Microsoft.EntityFrameworkCore;
+using Facturas_simplified.Clients.Entities;
+using Facturas_simplified.Invoices.Entities;
+using Facturas_simplified.Ncfs.Entities;
+using Facturas_simplified.Payments.Entities;
+using Facturas_simplified.Products.Entities;
+using Facturas_simplified.Provinces.Entities;
 
 namespace Facturas_simplified.Database;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-  public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-  {
-
-  }
   public DbSet<Client> Clients { get; set; }
   public DbSet<Province> Provinces { get; set; }
   public DbSet<Invoice> Invoices { get; set; }

@@ -1,0 +1,23 @@
+using Facturas_simplified.Abstractions;
+using Facturas_simplified.Invoices.Entities;
+using Facturas_simplified.Provinces.Entities;
+
+namespace Facturas_simplified.Clients.Entities;
+
+public class Client : AuditableEntity
+{
+  public int Id { get; set; }
+  public required string Name { get; set; }
+  public required string Rnc { get; set; }
+  public string? Direction { get; set; }
+  public string? PhoneNumber { get; set; }
+  public string? Email { get; set; }
+  public string? Sector { get; set; }
+
+  // navigations properties
+  public ICollection<Invoice>? Invoices { get; set; }
+
+  public int? ProvinceId { get; set; }
+  public Province? Province { get; set; }
+
+}

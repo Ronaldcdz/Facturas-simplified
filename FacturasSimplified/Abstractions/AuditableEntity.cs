@@ -1,5 +1,3 @@
-using System;
-
 namespace Facturas_simplified.Abstractions;
 
 public abstract class AuditableEntity

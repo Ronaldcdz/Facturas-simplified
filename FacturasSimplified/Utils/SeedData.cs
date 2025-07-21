@@ -1,7 +1,7 @@
 using Facturas_simplified.Database;
-using Facturas_simplified.Clients;
-using Facturas_simplified.Provinces;
-using Facturas_simplified.Ncfs;
+using Facturas_simplified.Clients.Entities;
+using Facturas_simplified.Provinces.Entities;
+using Facturas_simplified.Ncfs.Entities;
 
 namespace Facturas_simplified.Utils;
 
